@@ -120,10 +120,11 @@ int main(){
             }
         }
     }
-    //DIRECTED GRAPH
+    //UNDIRECTED GRAPH
     for(int i=0; i<e; i++){
         cin>>u>>v;
         g[u][v]=1;
+        g[v][u]=1;
     }
 
     
