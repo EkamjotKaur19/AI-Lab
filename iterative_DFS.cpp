@@ -24,6 +24,7 @@ void dfs(int g[n][n], int w, int d, vector<bool>&visited){
 void dfs_main(int g[n][n], int w){
     for(int i=1; i<=3; i++){
         vector <bool> visited(n,false);
+        cout<<"For depth= "<<i<<endl;
         dfs(g,w,i,visited);
         cout<<endl;
     }
@@ -55,3 +56,15 @@ int main(){
     dfs_main(g,w);
     return 0;
 }
+
+/*
+    Output:
+    Enter the starting vertex
+    0
+    For depth= 1
+    0
+    For depth= 2
+    0 1 2 3
+    For depth= 3
+    0 1 4 5 6 2 7 3 8
+*/
