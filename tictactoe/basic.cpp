@@ -12,6 +12,9 @@ using namespace std;
 4. Go function
 5. make two function
 5. Posswin
+6. Condition of Draw
+7. Move by Computer
+8. Move by User
 
 */
 
@@ -41,7 +44,7 @@ void display(){
         }
     }
     cout<<endl;
-    cout<<"-------------------"<<endl;
+    cout<<"-----------------"<<endl;
 
     for(int i=4; i<=6; i++){
         cout<<put_X_O(board[i])<<" ";
@@ -50,7 +53,7 @@ void display(){
         }
     }
     cout<<endl;
-    cout<<"-------------------"<<endl;
+    cout<<"-----------------"<<endl;
 
     for(int i=7; i<=9; i++){
         cout<<put_X_O(board[i])<<" ";
