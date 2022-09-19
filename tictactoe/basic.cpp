@@ -1,7 +1,5 @@
 #include<iostream>
 #include<bits/stdc++.h>
-#include<stdio.h>
-#include<windows.h>
 using namespace std;
 
 //Steps
