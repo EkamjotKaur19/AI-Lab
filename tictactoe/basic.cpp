@@ -4,28 +4,79 @@
 #include<windows.h>
 using namespace std;
 
+//Steps
+/*
+1. Initialized empty board
+2. Put OX
+3. Display func for board
+4. Go function
+5. make two function
+5. Posswin
+
+*/
+
 int board[10]={2,2,2,2,2,2,2,2,2,2};
-int turn=1;
+int turn=0;
 int flag=0;
 int player, comp;
-void comp_game();
 void user_game();
-void draw_cond();
-void board_state();
 
-
-void gotoxy(short a, short b){
-    COORD coordintes;
-    coordintes.X=a;
-    coordintes.Y=b;
-
-    SetConsoleCursorPosition(
-        GetStdHandle(STD_OUTPUT_HANDLE), coordintes
-    );
-
+char put_X_O(int n){
+    if(n==3){
+        return 'X';
+    }
+    if(n==5){
+        return 'O';
+    }
+    else{
+        return ' ';
+    }
 }
 
-//First function - Make 2
+void display(){
+    for(int i=1; i<=3; i++){
+        cout<<put_X_O(board[i])<<" ";
+        if(i!=3){
+            cout<<" | ";
+        }
+    }
+    cout<<endl;
+    cout<<"-------------------"<<endl;
+
+    for(int i=4; i<=6; i++){
+        cout<<put_X_O(board[i])<<" ";
+        if(i!=6){
+            cout<<" | ";
+        }
+    }
+    cout<<endl;
+    cout<<"-------------------"<<endl;
+
+    for(int i=7; i<=9; i++){
+        cout<<put_X_O(board[i])<<" ";
+        if(i!=9){
+            cout<<" | ";
+        }
+    }
+    cout<<endl;
+    cout<<endl;
+    cout<<endl;
+    cout<<endl;
+    cout<<endl;
+    cout<<endl;
+    cout<<endl;
+}
+
+void Go(int n){
+    if(turn%2!=0){
+        board[n]=3;
+    }
+    else{
+        board[n]=5;
+    }
+    turn++;
+}
+
 int make_two(){
     if(board[5]==2){
         return 5;
@@ -45,18 +96,6 @@ int make_two(){
     return 0;
 }
 
-//Second Function - Go(n)
-void Go(int n){
-    if(turn%2!=0){
-        board[n]=3;
-    }
-    else{
-        board[n]=5;
-    }
-    turn++;
-}
-
-//Third Function - Posswin(p);
 int Posswin(int p){
     int i;
     int target, pos;
@@ -127,6 +166,16 @@ int Posswin(int p){
     return 0;
 }
 
+
+
+bool draw_cond(){
+    if(turn>9){
+        cout<<"Draw"<<endl;
+        exit(0);
+    }
+}
+
+
 void comp_game(){
     if(Posswin(comp)){
         Go(Posswin(comp));
@@ -141,10 +190,10 @@ void comp_game(){
         }
 
     }
-    board_state();
+    display();
+    
 
     if(flag){
-        gotoxy(30,20);
         cout<<"Computer Wins"<<endl;
         return;
     }
@@ -156,8 +205,7 @@ void comp_game(){
 void user_game(){
     int pos;
     draw_cond();
-    board_state();
-    gotoxy(30,18);
+
     cout<<"Your move at position: "<<endl;
     cin>>pos;
     if(board[pos]!=2){
@@ -166,70 +214,13 @@ void user_game(){
     }
     if(pos == Posswin(player)){
         Go(pos);
-        board_state();
-        gotoxy(30,20);
+        display();
         cout<<"Player wins"<<endl;
         return;
     }
     Go(pos);
-    board_state();
+    display();
     comp_game();
-}
-
-void draw_cond(){
-    if(turn>9){
-        cout<<"Game Draw"<<endl;
-    }
-}
-
-void put_X_O(char ch, int pos){
-    int m;
-    int x=31, y=10;
-    m=pos;
-    if(m>3){
-        while(m>3){
-            y=y+3;
-            m=m-3;
-        }
-    }
-
-    if(pos%3 == 0){
-        x=x+16;
-    }
-    else{
-        pos = pos%3;
-        pos--;
-        while(pos){
-            x=x+8;
-            pos--;
-        }
-    }
-    gotoxy(x,y);
-    cout<<ch<<endl;
-}
-
-void board_state(){
-    int j;
-    for(j=9; j<17; j++){
-        gotoxy(35,j);
-        cout<<"|          |"<<endl;
-    }
-    gotoxy(28,11);
-    cout<<"--------------------------"<<endl;
-
-    gotoxy(28,14);
-    cout<<"--------------------------"<<endl;
-
-    for(j=1; j<10; j++){
-        if(board[j]==3){
-            put_X_O('X', j);
-        }
-        else{
-            if(board[j]==5){
-                put_X_O('0', j);
-            }
-        }
-    }
 }
 
 
@@ -256,7 +247,5 @@ int main(){
         comp_game();
         break;
     }
-
-    
-
+    return 0;
 }
