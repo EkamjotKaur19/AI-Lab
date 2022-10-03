@@ -19,6 +19,7 @@ using namespace std;
 vector<int>board(10,2);
 int turn=0;
 int flag=0;
+int dep=1;
 int player, comp;
 void user_game();
 
@@ -156,6 +157,30 @@ int evaluate(int player){
         return -5
     }
     return 0;
+}
+
+
+int MiniMax(vector<int>board, int depth, int player){
+    if(dep==depth){
+        return evaluate(player);
+    }
+    vector<vector<int>>next_move=move_gen();
+    if(next_move.size()==0){
+        return evaluate(player);
+    }
+    int mx=INT_MIN;
+    vector<int>best_config
+    for(int i=0; i<next_move.size();i++){
+        int config=MiniMax(next_move[i],depth+1, !player);
+        config=-config;
+        if(config>mx){
+            mx=config;
+            best_config=next_move[i];
+
+        }
+    }
+    board=best_config;
+    return mx;
 }
 
 bool draw_cond(){
