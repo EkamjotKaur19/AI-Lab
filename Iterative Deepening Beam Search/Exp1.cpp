@@ -1,61 +1,34 @@
-#include<iostream>
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-#define n 10
-//Nodes are numbered from 0
-void dfs(int g[n][n], int w, int d, vector<bool>&visited, int m){ 
-    queue<int>q; 
-    if(d==0){
+
+void dfs(const vector<vector<int>> &matrix, vector<bool> &vis, int curr, int d, int w)
+{
+    if (d == 0)
         return;
-    }
-    else{
-        visited[w]=true;
-        cout<<w<<" ";
-        q.push(w);
-        for(int i=0; i<n; i++){
-            if(q.size()<m){
-                if(g[w][i]==1){
-                    if(visited[i]==false){
-                        dfs(g,i,d-1,visited,m);
-                    }   
-                }
-            }
-        }
-    }
-    return;
-}
-//Nodes are numbered from 0
-void dfs_main(int g[n][n], int w){
-    int m = 3;
-    for(int i=1; i<=3; i++){
-        vector <bool> visited(n,false);
-        cout<<"For depth = "<<i<<endl;
-        dfs(g,w,i,visited,2);
-        cout<<endl;
-    }
+    vis[curr] = true;
+    cout << curr + 1 << " ";
+    for (int i = 0, cnt = 0; i < matrix.size(); i++)
+        if (matrix[curr][i] == 1 && !vis[i] && cnt < w)
+            dfs(matrix, vis, i, d - 1, w + 1), cnt++;
 }
 
-
-//MAIN FUNCTION
-int main(){
-//Nodes are numbered from 0
-//                
-    int g[n][n]={{0, 1, 1, 0, 0, 1, 0, 0, 0, 0}, 
-                {1, 0, 1, 1, 0, 0, 0, 0, 0, 0}, 
-                {1, 1, 0, 0, 1, 0, 0, 1, 0, 0}, 
-                {0, 1, 0, 0, 1, 0, 1, 0, 1, 0}, 
-                {0, 0, 1, 1, 0, 1, 1, 0, 0, 0}, 
-                {1, 0, 0, 0, 1, 0, 0, 0, 0, 1}, 
-                {0, 0, 0, 1, 1, 0, 0, 1, 0, 0}, 
-                {0, 0, 1, 0, 0, 0, 1, 0, 0, 0}, 
-                {0, 0, 0, 1, 0, 0, 0, 0, 0, 1}, 
-                {0, 0, 0, 0, 0, 1, 0, 0, 1, 0}};
-
-    //SOURCE VERTEX AS INPUT
-    int w;
-    cout<<"Enter the starting vertex"<<endl;
-    cin>>w;
-    dfs_main(g,w);
-    return 0;
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> adj(n, vector<int>(n, 0));
+    for (int i = 0; i < m; i++)
+    {
+        int x, y;
+        cin >> x >> y;
+        x--, y--;
+        adj[x][y] = adj[y][x] = 1;
+    }
+    for (int d = 1; d <= 3; d++)
+    {
+        cout << "d=" << d << ", w=" << 1 << " -> ";
+        vector<bool> vis(n, false);
+        dfs(adj, vis, 0, d, 1);
+        cout << endl;
+    }
 }
-
